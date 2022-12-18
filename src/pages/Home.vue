@@ -18,19 +18,19 @@
                 <input v-model="wavesAddress" />
             </span>
         </div>
-        <div v-if="ethAddress && ethAddress !== null">
+        <div v-if="ethAddress && ethAddress !== 'null'">
             <h2>EVM-based network</h2>
             <EVM :address="ethAddress"></EVM>
         </div>
-        <div v-if="eosAddress && eosAddress !== null">
+        <div v-if="eosAddress && eosAddress !== 'null'">
             <h2>EOS</h2>
             <EOS :address="eosAddress"></EOS>
         </div>
-        <div v-if="hiveAddress && hiveAddress !== null">
+        <div v-if="hiveAddress && hiveAddress !== 'null'">
             <h2>Hive</h2>
             <Hive :address="hiveAddress"></Hive>
         </div>
-        <div v-if="wavesAddress && wavesAddress !== null">
+        <div v-if="wavesAddress && wavesAddress !== 'null'">
             <h2>Waves</h2>
             <Waves :address="wavesAddress"></Waves>
         </div>
