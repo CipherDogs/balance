@@ -5,29 +5,41 @@
                 EVM:
                 <input v-model="ethAddress" />
             </span>
+            <span>
+                Waves:
+                <input v-model="wavesAddress" />
+            </span>
         </div>
         <h2>EVM-based network</h2>
         <EVM v-if="ethAddress" :address="ethAddress"></EVM>
+        <h2>Waves</h2>
+        <Waves v-if="wavesAddress" :address="wavesAddress"></Waves>
     </div>
 </template>
 
 <script>
 import EVM from '../components/EVM.vue';
+import Waves from '../components/Waves.vue';
 
 export default {
     name: "Home",
     data() {
         return {
             ethAddress: "",
+            wavesAddress: "",
         };
     },
-    components: { EVM },
+    components: { EVM, Waves },
     mounted() {
         this.ethAddress = window.localStorage.getItem("ethAddress");
+        this.wavesAddress = window.localStorage.getItem("wavesAddress");
     },
     watch: {
         ethAddress: function (val) {
             window.localStorage.setItem("ethAddress", val);
+        },
+        wavesAddress: function (val) {
+            window.localStorage.setItem("wavesAddress", val);
         }
     }
 };

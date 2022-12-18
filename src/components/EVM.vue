@@ -1,10 +1,10 @@
 <template>
-    <div class="evm">
+    <div class="block">
         <div class="head">
             <span>Chain</span>
             <span>Balance</span>
         </div>
-        <div class="chain" v-for="balance in balances" v-bind:key="balance.name">
+        <div class="item" v-for="balance in balances" v-bind:key="balance.name">
             <span>{{ balance.name }}</span>
             <span>{{ balance.balance }} {{ balance.ticker }}</span>
         </div>
@@ -102,37 +102,5 @@ export default {
 </script>
 
 <style scoped>
-.evm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    padding: 0px 10px 10px 10px;
-    background-color: #f8f9fb;
-    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 14%);
-}
-
-.head {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 0px 0px 5px 0px;
-    padding: 10px;
-    background-color: #b3b3b3;
-    font-weight: 700;
-}
-
-.chain {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 5px 0px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed #e9e9eb;
-}
+@import "../assets/styles/block.css";
 </style>
