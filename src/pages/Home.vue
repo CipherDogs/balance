@@ -18,22 +18,30 @@
                 <input v-model="wavesAddress" />
             </span>
         </div>
-        <h2>EVM-based network</h2>
-        <EVM v-if="ethAddress" :address="ethAddress"></EVM>
-        <h2>EOS</h2>
-        <EOS v-if="eosAddress" :address="eosAddress"></EOS>
-        <h2>Hive</h2>
-        <Hive v-if="hiveAddress" :address="hiveAddress"></Hive>
-        <h2>Waves</h2>
-        <Waves v-if="wavesAddress" :address="wavesAddress"></Waves>
+        <div v-if="ethAddress && ethAddress !== null">
+            <h2>EVM-based network</h2>
+            <EVM :address="ethAddress"></EVM>
+        </div>
+        <div v-if="eosAddress && eosAddress !== null">
+            <h2>EOS</h2>
+            <EOS :address="eosAddress"></EOS>
+        </div>
+        <div v-if="hiveAddress && hiveAddress !== null">
+            <h2>Hive</h2>
+            <Hive :address="hiveAddress"></Hive>
+        </div>
+        <div v-if="wavesAddress && wavesAddress !== null">
+            <h2>Waves</h2>
+            <Waves :address="wavesAddress"></Waves>
+        </div>
     </div>
 </template>
 
 <script>
-import EVM from '../components/EVM.vue';
-import EOS from '../components/EOS.vue';
-import Hive from '../components/Hive.vue';
-import Waves from '../components/Waves.vue';
+import EVM from "../components/EVM.vue";
+import EOS from "../components/EOS.vue";
+import Hive from "../components/Hive.vue";
+import Waves from "../components/Waves.vue";
 
 export default {
     name: "Home",
@@ -65,7 +73,7 @@ export default {
         wavesAddress: function (val) {
             window.localStorage.setItem("wavesAddress", val);
         },
-    }
+    },
 };
 </script>
 
