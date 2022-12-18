@@ -10,6 +10,10 @@
                 <input v-model="eosAddress" />
             </span>
             <span>
+                Hive:
+                <input v-model="hiveAddress" />
+            </span>
+            <span>
                 Waves:
                 <input v-model="wavesAddress" />
             </span>
@@ -18,6 +22,8 @@
         <EVM v-if="ethAddress" :address="ethAddress"></EVM>
         <h2>EOS</h2>
         <EOS v-if="eosAddress" :address="eosAddress"></EOS>
+        <h2>Hive</h2>
+        <Hive v-if="hiveAddress" :address="hiveAddress"></Hive>
         <h2>Waves</h2>
         <Waves v-if="wavesAddress" :address="wavesAddress"></Waves>
     </div>
@@ -26,6 +32,7 @@
 <script>
 import EVM from '../components/EVM.vue';
 import EOS from '../components/EOS.vue';
+import Hive from '../components/Hive.vue';
 import Waves from '../components/Waves.vue';
 
 export default {
@@ -34,13 +41,15 @@ export default {
         return {
             ethAddress: "",
             eosAddress: "",
+            hiveAddress: "",
             wavesAddress: "",
         };
     },
-    components: { EVM, EOS, Waves },
+    components: { EVM, EOS, Hive, Waves },
     mounted() {
         this.ethAddress = window.localStorage.getItem("ethAddress");
         this.eosAddress = window.localStorage.getItem("eosAddress");
+        this.hiveAddress = window.localStorage.getItem("hiveAddress");
         this.wavesAddress = window.localStorage.getItem("wavesAddress");
     },
     watch: {
@@ -49,6 +58,9 @@ export default {
         },
         eosAddress: function (val) {
             window.localStorage.setItem("eosAddress", val);
+        },
+        hiveAddress: function (val) {
+            window.localStorage.setItem("hiveAddress", val);
         },
         wavesAddress: function (val) {
             window.localStorage.setItem("wavesAddress", val);
