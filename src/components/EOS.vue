@@ -1,7 +1,7 @@
 <template>
     <div class="block">
         <div class="head">
-            <span>Asset</span>
+            <span>Token</span>
             <span>Balance</span>
         </div>
         <div class="item" v-for="balance in balances" v-bind:key="balance.name">
@@ -15,10 +15,10 @@
 import axios from "axios";
 
 export default {
-    name: "Waves",
+    name: "EOS",
     data() {
         return {
-            nodeURL: "http://api.eosn.io",
+            nodeURL: "https://api.eosn.io",
             balances: [],
         };
     },
