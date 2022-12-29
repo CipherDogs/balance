@@ -1,6 +1,26 @@
 <template>
     <div class="chains">
-        <div class="address">
+        <pre>
+
+
+ ▄▄▄▄    ▄▄▄       ██▓    ▄▄▄       ███▄    █  ▄████▄  ▓█████ 
+▓█████▄ ▒████▄    ▓██▒   ▒████▄     ██ ▀█   █ ▒██▀ ▀█  ▓█   ▀ 
+▒██▒ ▄██▒██  ▀█▄  ▒██░   ▒██  ▀█▄  ▓██  ▀█ ██▒▒▓█    ▄ ▒███   
+▒██░█▀  ░██▄▄▄▄██ ▒██░   ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓▓▄ ▄██▒▒▓█  ▄ 
+░▓█  ▀█▓ ▓█   ▓██▒░██████▒▓█   ▓██▒▒██░   ▓██░▒ ▓███▀ ░░▒████▒
+░▒▓███▀▒ ▒▒   ▓▒█░░ ▒░▓  ░▒▒   ▓▒█░░ ▒░   ▒ ▒ ░ ░▒ ▒  ░░░ ▒░ ░
+▒░▒   ░   ▒   ▒▒ ░░ ░ ▒  ░ ▒   ▒▒ ░░ ░░   ░ ▒░  ░  ▒    ░ ░  ░
+ ░    ░   ░   ▒     ░ ░    ░   ▒      ░   ░ ░ ░           ░   
+ ░            ░  ░    ░  ░     ░  ░         ░ ░ ░         ░  ░
+      ░                                       ░               
+
+
+        </pre>
+        <div class="panel">
+            <a href="#" v-if="!config" @click="config = true">Config</a>
+            <a href="#" v-else @click="config = false">Close</a>
+        </div>
+        <div v-if="config" class="config">
             <span>
                 EVM:
                 <input v-model="ethAddress" />
@@ -47,6 +67,7 @@ export default {
     name: "Home",
     data() {
         return {
+            config: false,
             ethAddress: "",
             eosAddress: "",
             hiveAddress: "",
@@ -78,19 +99,35 @@ export default {
 </script>
 
 <style scoped>
+pre {
+    font-size: 10px;
+    text-align: center;
+}
 .chains {
     max-width: 500px;
     margin: auto;
     margin-top: 10px;
 }
 
-.address span {
+.panel {
+    text-align: center;
+}
+
+.panel a,
+.panel a:hover,
+.panel a:active {
+    color: black;
+    text-decoration: none;
+}
+
+.config span {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px 0px;
 }
 
-.address input {
+.config input {
     width: 80%;
 }
 </style>
