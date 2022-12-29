@@ -32,7 +32,6 @@ export default {
                 id: 1,
             })
             .then((res) => {
-                console.log(res.data);
                 this.balances.push({
                     name: "Hive",
                     balance: res.data.result[0].balance,
