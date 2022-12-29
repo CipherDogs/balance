@@ -3,10 +3,12 @@
         <div class="head">
             <span>Asset</span>
             <span>Balance</span>
+            <span>Price</span>
         </div>
         <div class="item" v-for="balance in balances" v-bind:key="balance.name">
             <span>{{ balance.name }}</span>
             <span>{{ balance.balance }} {{ balance.ticker }}</span>
+            <span>${{ balance.price }}</span>
         </div>
     </div>
 </template>
@@ -14,7 +16,10 @@
 <script>
 import axios from "axios";
 
+import assets from "../helpers/wavesAssets.json";
+
 import { getAddress } from "../helpers/wavesAddress";
+import { getPrice } from "../helpers/coingecko";
 
 export default {
     name: "Waves",
@@ -37,11 +42,14 @@ export default {
         async getWavesBalance(address) {
             await axios
                 .get(`${this.nodeURL}/addresses/balance/${address}`)
-                .then((res) => {
+                .then(async (res) => {
+                    let price = await getPrice("waves");
+
                     this.balances.push({
                         name: "Waves",
-                        balance: res.data.balance / this.wavesDecimals,
+                        balance: (res.data.balance / this.wavesDecimals).toFixed(4),
                         ticker: "WAVES",
+                        price: price.waves.usd,
                     });
                 })
                 .catch((err) => {
@@ -50,19 +58,26 @@ export default {
         },
         async getAssets(address) {
             await axios
-                .get(`${this.nodeURL}/assets/balance/${this.address}`)
-                .then((res) => {
+                .get(`${this.nodeURL}/assets/balance/${address}`)
+                .then(async (res) => {
                     const balances = res.data.balances;
 
                     for (let i = 0; i < balances.length; i++) {
-                        const decimals =
-                            10 ** balances[i].issueTransaction.decimals;
+                        const asset = assets[balances[i].assetId];
 
-                        this.balances.push({
-                            name: balances[i].issueTransaction.name,
-                            balance: balances[i].balance / decimals,
-                            ticker: balances[i].issueTransaction.name,
-                        });
+                        if (asset) {
+                            const price = await getPrice(asset.id);
+
+                            const decimals =
+                                10 ** balances[i].issueTransaction.decimals;
+
+                            this.balances.push({
+                                name: asset.name,
+                                balance: (balances[i].balance / decimals).toFixed(4),
+                                ticker: asset.ticker,
+                                price: price[asset.id].usd,
+                            });
+                        }
                     }
                 })
                 .catch((err) => {

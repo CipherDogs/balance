@@ -31,3 +31,12 @@
     padding-bottom: 10px;
     border-bottom: 1px dashed #e9e9eb;
 }
+
+.item > span {
+    width: 140px;
+    text-align: right;
+}
+
+.item > span:first-child {
+    text-align: left !important;
+}

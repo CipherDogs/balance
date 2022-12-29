@@ -3,16 +3,20 @@
         <div class="head">
             <span>Chain</span>
             <span>Balance</span>
+            <span>Price</span>
         </div>
         <div class="item" v-for="balance in balances" v-bind:key="balance.name">
             <span>{{ balance.name }}</span>
             <span>{{ balance.balance }} {{ balance.ticker }}</span>
+            <span>${{ balance.price }}</span>
         </div>
     </div>
 </template>
 
 <script>
 import { ethers } from "ethers";
+
+import { getPrice } from "../helpers/coingecko";
 
 export default {
     name: "EVM",
@@ -23,6 +27,7 @@ export default {
                     name: "Ethereum",
                     ticker: "ETH",
                     url: "https://main-light.eth.linkpool.io",
+                    id: "ethereum",
                 },
                 {
                     name: "Rinkeby",
@@ -38,16 +43,19 @@ export default {
                     name: "Moonbeam",
                     ticker: "GLMR",
                     url: "https://rpc.ankr.com/moonbeam",
+                    id: "moonbeam",
                 },
                 {
                     name: "Moonriver",
                     ticker: "MOVR",
                     url: "https://moonriver.public.blastapi.io",
+                    id: "moonriver",
                 },
                 {
                     name: "Polygon",
                     ticker: "MATIC",
                     url: "https://polygon-rpc.com/",
+                    id: "matic-network",
                 },
                 {
                     name: "Polygon Mumbai Testnet",
@@ -58,6 +66,7 @@ export default {
                     name: "Binance Smart Chain",
                     ticker: "BNB",
                     url: "https://bsc-dataseed.binance.org/",
+                    id: "binancecoin",
                 },
                 {
                     name: "Binance Smart Chain Testnet",
@@ -68,11 +77,13 @@ export default {
                     name: "Evmos Mainnet",
                     ticker: "EVMOS",
                     url: "https://eth.bd.evmos.org:8545",
+                    id: "evmos",
                 },
                 {
                     name: "Astar Network",
                     ticker: "ASTR",
                     url: "https://evm.astar.network",
+                    id: "astar",
                 },
             ],
             balances: [],
@@ -81,20 +92,37 @@ export default {
     props: ["address"],
     async mounted() {
         this.networks.forEach((item) => {
-            this.getBalance(this.address, item.name, item.url, item.ticker);
+            this.getBalance(
+                this.address,
+                item.name,
+                item.url,
+                item.ticker,
+                item.id
+            );
         });
     },
     methods: {
-        async getBalance(address, name, url, ticker) {
+        async getBalance(address, name, url, ticker, id) {
             const provider = ethers.getDefaultProvider(url);
 
-            provider.getBalance(address).then((balanceInWei) => {
+            provider.getBalance(address).then(async (balanceInWei) => {
                 const balance = ethers.utils.formatEther(balanceInWei); // wei to ether
-                this.balances.push({
-                    name,
-                    balance,
-                    ticker,
-                });
+
+                let price = 0;
+
+                if (id) {
+                    const result = await getPrice(id);
+                    price = result[id].usd;
+                }
+
+                if ((+balance).toFixed(4) != "0.0000") {
+                    this.balances.push({
+                        name,
+                        balance: (+balance).toFixed(4),
+                        ticker,
+                        price,
+                    });
+                }
             });
         },
     },

@@ -1,0 +1,17 @@
+{
+    "34N9YcEETLWn93qYQ64EsP1x89tSruJU44RrEMSXXEPJ": {
+        "name": "Tether USD",
+        "ticker": "USDT",
+        "id": "tether"
+    },
+    "DG2xFkPdDwKUoBkzGAhQtLpSGzfXLiCYPEzeKH2Ad24p": {
+        "name": "USDN",
+        "ticker": "USDN",
+        "id": "neutrino"
+    },
+    "4LHHvYGNKJUg5hj65aGD5vgScvCBmLpdRFtjokvCjSL8": {
+        "name": "WEST",
+        "ticker": "WEST",
+        "id": "waves-enterprise"
+    }
+}
